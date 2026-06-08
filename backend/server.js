@@ -15,17 +15,25 @@ const adminExtraRoutes = require('./routes/admin_extra');
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
+
+// Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin', adminExtraRoutes);
 
+// Health check route
 app.get('/', (req, res) => {
-  res.json({ message: 'ES’HLAHLENI membership backend is running.' });
+  res.json({
+    success: true,
+    message: 'ES’HLAHLENI membership backend is running.'
+  });
 });
 
 // Test DB connection
@@ -35,21 +43,24 @@ async function testConnection() {
     console.log('Database connected successfully');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
+    throw error;
   }
 }
 
-// Create default admin
+// Create default admin user
 async function ensureDefaultAdmin() {
   try {
     const email = process.env.ADMIN_EMAIL;
     const password = process.env.ADMIN_PASSWORD;
 
     if (!email || !password) {
-      console.log('ADMIN_EMAIL or ADMIN_PASSWORD missing in .env');
+      console.log('ADMIN_EMAIL or ADMIN_PASSWORD missing');
       return;
     }
 
-    const existing = await User.findOne({ where: { email } });
+    const existing = await User.findOne({
+      where: { email }
+    });
 
     if (existing) {
       console.log(`Admin user already exists: ${email}`);
@@ -72,19 +83,26 @@ async function ensureDefaultAdmin() {
   }
 }
 
-// Start server
-sequelize.sync({ alter: true })
-  .then(async () => {
+// Start application
+async function startServer() {
+  try {
     await testConnection();
+
+    // Do NOT use alter:true in production
+    await sequelize.sync();
+
     await ensureDefaultAdmin();
-  })
-  .then(() => {
+
     const PORT = process.env.PORT || 5000;
 
     app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
     });
-  })
-  .catch((error) => {
-    console.error('Unable to connect to the database:', error);
-  });
+
+  } catch (error) {
+    console.error('Unable to start application:', error);
+    process.exit(1);
+  }
+}
+
+startServer();
