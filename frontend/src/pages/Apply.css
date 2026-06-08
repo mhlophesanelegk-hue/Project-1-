@@ -1,0 +1,526 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+/* =========================
+   ROOT
+========================= */
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --off-white: #f5f5f3;
+  --mid-gray: #888888;
+  --text-body: #555555;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+
+/* =========================
+   PAGE
+========================= */
+.apply-page {
+  min-height: 100vh;
+  background: var(--white);
+  font-family: var(--font-body);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+.apply-header {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 56px 60px 48px;
+}
+
+.apply-eyebrow {
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.apply-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: -0.5px;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.apply-header h1 em {
+  font-style: italic;
+  color: var(--mid-gray);
+}
+
+.apply-header p {
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--text-body);
+  max-width: 480px;
+}
+
+/* =========================
+   PRICING GRID
+========================= */
+.apply-pricing {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.pricing-card {
+  padding: 48px 40px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+  transition: background 0.3s ease;
+  position: relative;
+}
+
+.pricing-card:last-child {
+  border-right: none;
+}
+
+.pricing-card:hover {
+  background: rgba(0,0,0,0.02);
+}
+
+.pricing-card.featured {
+  background: var(--black);
+}
+
+.pricing-card.featured:hover {
+  background: #111;
+}
+
+.pricing-num {
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: rgba(0,0,0,0.22);
+  letter-spacing: 3px;
+  display: block;
+  margin-bottom: 24px;
+}
+
+.pricing-card.featured .pricing-num {
+  color: rgba(255,255,255,0.2);
+}
+
+.pricing-duration {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 300;
+  color: var(--black);
+  line-height: 1.0;
+  margin-bottom: 4px;
+}
+
+.pricing-card.featured .pricing-duration {
+  color: var(--white);
+}
+
+.pricing-unit {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 28px;
+  display: block;
+}
+
+.pricing-card.featured .pricing-unit {
+  color: rgba(255,255,255,0.35);
+}
+
+.pricing-price {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 300;
+  color: var(--black);
+  line-height: 1;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.pricing-card.featured .pricing-price {
+  color: var(--white);
+}
+
+.pricing-currency {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  display: block;
+  margin-bottom: 24px;
+}
+
+.pricing-card.featured .pricing-currency {
+  color: rgba(255,255,255,0.3);
+}
+
+.pricing-badge {
+  font-size: 8px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.6);
+  display: inline-block;
+}
+
+/* =========================
+   MAIN CONTENT GRID
+========================= */
+.apply-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* =========================
+   BANK DETAILS
+========================= */
+.apply-bank {
+  padding: 56px 60px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+}
+
+.apply-section-eyebrow {
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.apply-bank h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--black);
+  margin-bottom: 32px;
+  line-height: 1.1;
+}
+
+.apply-bank h2 em {
+  font-style: italic;
+}
+
+.bank-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.bank-row:first-of-type {
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.bank-row .bank-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+}
+
+.bank-row .bank-value {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--black);
+}
+
+.bank-note {
+  margin-top: 24px;
+  font-size: 10px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--text-body);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.bank-note::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: rgba(0,0,0,0.2);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+/* =========================
+   UPLOAD FORM
+========================= */
+.apply-form-panel {
+  padding: 56px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.apply-form-panel h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--black);
+  margin-bottom: 32px;
+  line-height: 1.1;
+}
+
+.apply-form-panel h2 em {
+  font-style: italic;
+}
+
+.apply-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* File input */
+.apply-file-field {
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 20px 0;
+  margin-bottom: 32px;
+  transition: border-color 0.3s ease;
+}
+
+.apply-file-field:focus-within {
+  border-bottom-color: var(--black);
+}
+
+.apply-file-label {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-bottom: 12px;
+  display: block;
+  font-weight: 500;
+}
+
+.apply-file-field input[type="file"] {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--black);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.apply-file-field input[type="file"]::file-selector-button {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  background: transparent;
+  color: var(--black);
+  border: 1px solid rgba(0,0,0,0.25);
+  cursor: pointer;
+  margin-right: 16px;
+  transition: background 0.2s ease;
+}
+
+.apply-file-field input[type="file"]::file-selector-button:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+/* Submit button */
+.apply-btn-submit {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 16px 48px;
+  background: var(--black);
+  color: var(--white);
+  border: 2px solid var(--black);
+  cursor: pointer;
+  outline: none;
+  transition: background 0.3s ease;
+  align-self: flex-start;
+}
+
+.apply-btn-submit:hover:not(:disabled) {
+  background: #222;
+  border-color: #222;
+}
+
+.apply-btn-submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.apply-loading-dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.apply-loading-dots span {
+  width: 3px;
+  height: 3px;
+  background: var(--white);
+  border-radius: 50%;
+  animation: dotPulse 1.2s ease-in-out infinite;
+}
+
+.apply-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.apply-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(1); }
+  40% { opacity: 1; transform: scale(1.3); }
+}
+
+/* =========================
+   MESSAGE
+========================= */
+.apply-message {
+  margin-top: 24px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-body);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.apply-message::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.apply-message.error   { color: #c0392b; }
+.apply-message.success { color: #2c7a4b; }
+
+/* =========================
+   FOOTER STRIP
+========================= */
+.apply-footer {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: 32px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--off-white);
+}
+
+.apply-footer .brand {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 300;
+  color: #888;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.apply-footer .tagline {
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.apply-footer .age-badge {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #888;
+  text-transform: uppercase;
+  border: 1px solid #ccc;
+  padding: 5px 12px;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.apply-header     { animation: fadeUp 0.7s ease both; animation-delay: 0.05s; }
+.apply-pricing    { animation: fadeUp 0.7s ease both; animation-delay: 0.15s; }
+.apply-body       { animation: fadeUp 0.7s ease both; animation-delay: 0.25s; }
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1100px) {
+  .apply-pricing {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pricing-card:nth-child(2) {
+    border-right: none;
+  }
+
+  .pricing-card:nth-child(1),
+  .pricing-card:nth-child(2) {
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+}
+
+@media (max-width: 900px) {
+  .apply-header {
+    padding: 40px 24px 32px;
+  }
+
+  .apply-pricing {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .apply-body {
+    grid-template-columns: 1fr;
+  }
+
+  .apply-bank {
+    padding: 40px 24px;
+    border-right: none;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .apply-form-panel {
+    padding: 40px 24px;
+  }
+
+  .apply-footer {
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .apply-pricing {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-card {
+    border-right: none;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+}

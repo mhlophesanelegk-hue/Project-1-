@@ -1,0 +1,4 @@
+- [x] Verify project requirements and scaffold
+- [ ] Create backend server, routes, models, email, PDF card generation
+- [ ] Create frontend Vite + React app with pages, routing, and API integration
+- [ ] Provide README and run instructions

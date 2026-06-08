@@ -1,0 +1,646 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+/* =========================
+   ROOT & RESET
+========================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --off-white: #f5f5f3;
+  --smoke: #e0e0dc;
+  --mid-gray: #888888;
+  --text-body: #555555;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+
+/* =========================
+   BASE
+========================= */
+.lux-home {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* =========================
+   HERO
+========================= */
+.lux-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.lux-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+/* Tag */
+.lux-tag {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  color: var(--mid-gray);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.lux-tag::before,
+.lux-tag::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: rgba(0,0,0,0.2);
+}
+
+/* Main Title */
+.lux-title {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 10vw, 120px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 0.9;
+  letter-spacing: -1px;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.lux-title-sub {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 2.5vw, 28px);
+  font-weight: 300;
+  letter-spacing: 10px;
+  color: var(--mid-gray);
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+/* Subtitle */
+.lux-subtitle {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 2;
+  color: var(--text-body);
+  max-width: 480px;
+  margin: 0 auto 48px;
+}
+
+/* Scroll indicator */
+.lux-scroll-hint {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.lux-scroll-hint span {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: rgba(0,0,0,0.3);
+  text-transform: uppercase;
+}
+
+.lux-scroll-line {
+  width: 1px;
+  height: 48px;
+  background: rgba(0,0,0,0.15);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 0.8; transform: scaleY(0.6); }
+}
+
+/* =========================
+   BUTTON SYSTEM
+========================= */
+.lux-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.lux-btn {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 16px 40px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  border: none;
+  outline: none;
+}
+
+.lux-btn-primary {
+  background: var(--black);
+  color: var(--white);
+  border: 2px solid var(--black);
+}
+
+.lux-btn-primary:hover {
+  background: #222;
+  border-color: #222;
+}
+
+.lux-btn-ghost {
+  background: transparent;
+  color: var(--black);
+  border: 1px solid var(--black);
+}
+
+.lux-btn-ghost:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* =========================
+   MARQUEE STRIP
+========================= */
+.lux-marquee {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--off-white);
+}
+
+.lux-marquee-track {
+  display: inline-flex;
+  animation: marquee 30s linear infinite;
+}
+
+.lux-marquee-track span {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  padding: 0 32px;
+}
+
+.lux-marquee-track .dot {
+  color: rgba(0,0,0,0.18);
+  letter-spacing: 0;
+  padding: 0;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* =========================
+   IMAGE SECTION
+========================= */
+.lux-image-section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.lux-image-main {
+  width: 100%;
+  height: 780px;
+  object-fit: cover;
+  object-position: center 85%;
+  display: block;
+  filter: grayscale(100%);
+}
+
+.lux-image-copy {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid rgba(0,0,0,0.08);
+  min-height: 780px;
+}
+
+.lux-eyebrow {
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.lux-image-copy h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--black);
+  margin-bottom: 24px;
+}
+
+.lux-image-copy h2 em {
+  font-style: italic;
+}
+
+.lux-image-copy p {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--text-body);
+  max-width: 340px;
+  margin-bottom: 32px;
+}
+
+/* =========================
+   FEATURES SECTION
+========================= */
+.lux-features {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--white);
+}
+
+.lux-card {
+  padding: 56px 40px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+  transition: background 0.3s ease;
+}
+
+.lux-card:last-child {
+  border-right: none;
+}
+
+.lux-card:hover {
+  background: rgba(0,0,0,0.02);
+}
+
+.lux-card-num {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: rgba(0,0,0,0.22);
+  margin-bottom: 32px;
+  display: block;
+}
+
+.lux-card h3 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--black);
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.lux-card p {
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  line-height: 2;
+  color: var(--text-body);
+}
+
+/* =========================
+   HOURS SECTION
+========================= */
+.lux-hours {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 260px;
+}
+
+.lux-hours-left {
+  padding: 60px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lux-hours-left h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 3vw, 48px);
+  font-weight: 300;
+  color: var(--black);
+  line-height: 1.1;
+}
+
+.lux-hours-left h2 em {
+  font-style: italic;
+}
+
+.lux-hours-right {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lux-hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.lux-hours-row:first-child {
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.lux-hours-row .day {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #777;
+  font-weight: 400;
+}
+
+.lux-hours-row .time {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--black);
+}
+
+/* =========================
+   NOTICE / RULES SECTION
+========================= */
+.lux-notice {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: 80px 60px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.lux-notice-left h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3vw, 44px);
+  font-weight: 300;
+  color: var(--black);
+  line-height: 1.15;
+  margin-top: 16px;
+}
+
+.lux-notice-left h2 em {
+  font-style: italic;
+}
+
+.lux-notice-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.lux-notice-item {
+  padding: 24px 28px 24px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.lux-notice-item:nth-child(2n) {
+  padding-left: 28px;
+  padding-right: 0;
+  border-left: 1px solid rgba(0,0,0,0.07);
+}
+
+.lux-notice-item .notice-num {
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: rgba(0,0,0,0.22);
+  flex-shrink: 0;
+  padding-top: 2px;
+  letter-spacing: 1px;
+}
+
+.lux-notice-item p {
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-body);
+}
+
+/* =========================
+   LOCATION SECTION
+========================= */
+.lux-location {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 220px;
+}
+
+.lux-location-left {
+  padding: 60px;
+  border-right: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lux-location-left h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 3vw, 48px);
+  font-weight: 300;
+  color: var(--black);
+  line-height: 1.1;
+}
+
+.lux-location-left h2 em {
+  font-style: italic;
+}
+
+.lux-location-right {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.lux-address-line {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 300;
+  color: var(--black);
+  line-height: 1.2;
+}
+
+.lux-address-sub {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+  margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .lux-location {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-location-left,
+  .lux-location-right {
+    padding: 40px 24px;
+    border-right: none;
+  }
+
+  .lux-location-left {
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+}
+
+/* =========================
+   FOOTER STRIP
+========================= */
+.lux-footer-strip {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: 40px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--off-white);
+}
+
+.lux-footer-strip .brand {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 300;
+  color: #555;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.lux-footer-strip .tagline {
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.lux-footer-strip .age {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #555;
+  text-transform: uppercase;
+  border: 1px solid #bbb;
+  padding: 6px 14px;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.lux-hero-content > * {
+  animation: fadeUp 0.9s ease both;
+}
+
+.lux-hero-content .lux-tag        { animation-delay: 0.1s; }
+.lux-hero-content .lux-title      { animation-delay: 0.25s; }
+.lux-hero-content .lux-title-sub  { animation-delay: 0.35s; }
+.lux-hero-content .lux-subtitle   { animation-delay: 0.45s; }
+.lux-hero-content .lux-buttons    { animation-delay: 0.55s; }
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .lux-image-section {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-image-main {
+    height: 400px;
+  }
+
+  .lux-image-copy {
+    padding: 40px 24px;
+    border-left: none;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .lux-features {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-card {
+    border-right: none;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 40px 24px;
+  }
+
+  .lux-hours {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-hours-left,
+  .lux-hours-right {
+    padding: 40px 24px;
+    border-right: none;
+  }
+
+  .lux-notice {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 48px 24px;
+  }
+
+  .lux-notice-right {
+    grid-template-columns: 1fr;
+  }
+
+  .lux-notice-item:nth-child(2n) {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .lux-footer-strip {
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px 24px;
+    text-align: center;
+  }
+}

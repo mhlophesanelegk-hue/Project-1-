@@ -1,0 +1,457 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+/* =========================
+   ROOT & RESET
+========================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --off-white: #f5f5f3;
+  --smoke: #e0e0dc;
+  --mid-gray: #888888;
+  --text-body: #555555;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+
+/* =========================
+   BASE
+========================= */
+.admin-page {
+  min-height: 100vh;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* =========================
+   HEADER
+========================= */
+.admin-header {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 64px 60px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--white);
+  animation: fadeUp 0.9s ease both;
+}
+
+.admin-header-tag {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 6px;
+  color: var(--mid-gray);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-header-tag::before,
+.admin-header-tag::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: rgba(0,0,0,0.2);
+}
+
+.admin-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 0.95;
+  letter-spacing: -1px;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.admin-header p {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+}
+
+/* =========================
+   INFO BANNER
+========================= */
+.membership-info {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 20px 60px;
+  background: var(--off-white);
+  text-align: center;
+}
+
+.membership-info p {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+}
+
+/* =========================
+   MESSAGE
+========================= */
+.admin-message {
+  padding: 16px 60px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #8b1e1e;
+  border-bottom: 1px solid rgba(139,30,30,0.15);
+  background: rgba(139,30,30,0.03);
+  text-align: center;
+}
+
+/* =========================
+   TABLE WRAPPER
+========================= */
+.table-card {
+  overflow-x: auto;
+}
+
+/* =========================
+   TABLE STRUCTURE
+========================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+/* Column width hints */
+.col-member     { width: 18%; }
+.col-status     { width: 26%; }   /* widest — long status strings */
+.col-proof      { width: 10%; }
+.col-membership { width: 22%; }
+.col-actions    { width: 24%; }
+
+thead {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+th {
+  padding: 20px 28px;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+  background: var(--off-white);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+td {
+  padding: 28px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  color: var(--black);
+  vertical-align: middle;
+}
+
+tbody tr {
+  transition: background 0.25s ease;
+}
+
+tbody tr:hover td {
+  background: rgba(0,0,0,0.018);
+}
+
+/* =========================
+   USER INFO
+========================= */
+.user-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--black);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.user-email {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--mid-gray);
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.status.approved {
+  color: #2a5a2a;
+  border-color: rgba(42, 90, 42, 0.35);
+  background: rgba(42, 90, 42, 0.05);
+}
+
+.status.pending {
+  color: var(--mid-gray);
+  border-color: rgba(0,0,0,0.15);
+  background: transparent;
+}
+
+.status.declined {
+  color: #8b1e1e;
+  border-color: rgba(139, 30, 30, 0.3);
+  background: rgba(139, 30, 30, 0.04);
+}
+
+/* =========================
+   PROOF LINK
+========================= */
+.proof-link {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.proof-link:hover {
+  color: var(--mid-gray);
+  border-color: var(--mid-gray);
+}
+
+.proof-none {
+  font-size: 16px;
+  color: rgba(0,0,0,0.2);
+  font-family: var(--font-display);
+}
+
+/* =========================
+   MEMBERSHIP CELL
+========================= */
+.membership-number {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--black);
+  margin-bottom: 10px;
+}
+
+.membership-duration {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.membership-duration label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+}
+
+.membership-duration select {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  padding: 10px 14px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: var(--white);
+  color: var(--black);
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
+  max-width: 160px;
+}
+
+.membership-duration select:focus {
+  border-color: var(--black);
+}
+
+.membership-duration select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.expiry-date {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--mid-gray);
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lux-action-btn {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 12px 18px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, opacity 0.2s ease;
+  outline: none;
+  white-space: nowrap;
+}
+
+.lux-action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-approve {
+  background: var(--black);
+  color: var(--white);
+}
+
+.btn-approve:hover:not(:disabled) {
+  background: #222;
+}
+
+.btn-decline {
+  background: transparent;
+  color: var(--black);
+  border: 1px solid rgba(0,0,0,0.3);
+}
+
+.btn-decline:hover:not(:disabled) {
+  background: rgba(0,0,0,0.04);
+  border-color: var(--black);
+}
+
+.btn-delete {
+  background: transparent;
+  color: #8b1e1e;
+  border: 1px solid rgba(139,30,30,0.3);
+}
+
+.btn-delete:hover:not(:disabled) {
+  background: rgba(139,30,30,0.05);
+  border-color: #8b1e1e;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+.admin-empty {
+  padding: 80px 60px;
+  text-align: center;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.admin-empty p {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(0,0,0,0.25);
+}
+
+/* =========================
+   FOOTER STRIP
+========================= */
+.admin-footer {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: 28px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--off-white);
+  margin-top: auto;
+}
+
+.admin-footer .brand {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 300;
+  color: #555;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.admin-footer .panel-label {
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: #999;
+  text-transform: uppercase;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.admin-header { animation: fadeUp 0.7s ease both 0.1s; }
+.membership-info { animation: fadeUp 0.7s ease both 0.2s; }
+.table-card { animation: fadeUp 0.7s ease both 0.3s; }
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .admin-header {
+    padding: 48px 24px 36px;
+  }
+
+  .membership-info {
+    padding: 16px 24px;
+  }
+
+  th, td {
+    padding: 18px 16px;
+  }
+
+  .admin-footer {
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
