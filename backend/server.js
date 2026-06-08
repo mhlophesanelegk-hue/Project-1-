@@ -5,7 +5,6 @@ const cors = require('cors');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 
-// IMPORTANT: ONLY use models/index.js setup
 const { sequelize, User } = require('./models');
 
 const authRoutes = require('./routes/auth');
@@ -19,7 +18,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Static files
+// Static Files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
@@ -30,13 +29,13 @@ app.use('/api/admin', adminExtraRoutes);
 
 // Health Check
 app.get('/', (req, res) => {
-res.json({
+res.status(200).json({
 success: true,
-message: 'ES’HLAHLENI membership backend is running.'
+message: 'ESIHLAHLENI membership backend is running'
 });
 });
 
-// Test DB connection
+// Test Database Connection
 async function testConnection() {
 try {
 await sequelize.authenticate();
@@ -47,7 +46,7 @@ throw error;
 }
 }
 
-// Create default admin if missing
+// Ensure Default Admin Exists
 async function ensureDefaultAdmin() {
 try {
 const email = process.env.ADMIN_EMAIL;
@@ -60,11 +59,11 @@ if (!email || !password) {
 }
 
 const existing = await User.findOne({
-  where: { email }
+  where: { email: email }
 });
 
 if (existing) {
-  console.log(`Admin user already exists: ${email}`);
+  console.log('Admin user already exists: ' + email);
   return;
 }
 
@@ -72,12 +71,12 @@ const hashed = await bcrypt.hash(password, 10);
 
 await User.create({
   name: 'Admin',
-  email,
+  email: email,
   password: hashed,
   role: 'admin'
 });
 
-console.log(`Created default admin user: ${email}`);
+console.log('Created default admin user: ' + email);
 ```
 
 } catch (error) {
@@ -91,15 +90,15 @@ try {
 await testConnection();
 
 ```
-// DO NOT RUN sequelize.sync() IN PRODUCTION
-// Database tables already exist in Railway
+// Tables already exist in Railway
+// Do not run sequelize.sync() in production
 
 await ensureDefaultAdmin();
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+  console.log('Server listening on port ' + PORT);
 });
 ```
 
@@ -110,4 +109,5 @@ process.exit(1);
 }
 
 startServer();
+
 
