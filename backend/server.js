@@ -46,7 +46,7 @@ throw error;
 }
 }
 
-// Ensure admin user exists
+// Ensure default admin exists
 async function ensureDefaultAdmin() {
 try {
 const email = process.env.ADMIN_EMAIL;
@@ -59,7 +59,7 @@ if (!email || !password) {
 }
 
 const existing = await User.findOne({
-  where: { email }
+  where: { email: email }
 });
 
 if (existing) {
@@ -71,7 +71,7 @@ const hashed = await bcrypt.hash(password, 10);
 
 await User.create({
   name: 'Admin',
-  email,
+  email: email,
   password: hashed,
   role: 'admin'
 });
@@ -91,9 +91,6 @@ console.log('Starting application...');
 
 ```
 await testConnection();
-
-// Temporarily skip admin creation until deployment succeeds
-// await ensureDefaultAdmin();
 
 const PORT = process.env.PORT || 5000;
 
