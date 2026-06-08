@@ -82,17 +82,24 @@ console.error('Error creating admin user:', error);
 
 async function startServer() {
 try {
-await testConnection();
+console.log('Starting application');
 
 ```
-await ensureDefaultAdmin();
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log('Server listening on port ' + PORT);
 });
 ```
+
+} catch (error) {
+console.error('Unable to start application:', error);
+process.exit(1);
+}
+}
+
+startServer();
+
 
 } catch (error) {
 console.error('Unable to start application:', error);
