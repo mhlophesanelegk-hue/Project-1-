@@ -73,7 +73,6 @@ await User.create({
 });
 
 console.log('Created default admin user: ' + email);
-```
 
 } catch (error) {
 console.error('Error creating admin user:', error);
@@ -93,6 +92,14 @@ app.listen(PORT, () => {
   console.log('Server listening on port ' + PORT);
 });
 ```
+
+} catch (error) {
+console.error('Unable to start application:', error);
+process.exit(1);
+}
+}
+
+startServer();
 
 } catch (error) {
 console.error('Unable to start application:', error);
