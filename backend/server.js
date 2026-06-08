@@ -18,7 +18,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Static Files
+// Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Routes
@@ -27,7 +27,7 @@ app.use('/api/applications', applicationRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin', adminExtraRoutes);
 
-// Health Check
+// Health check
 app.get('/', (req, res) => {
 res.status(200).json({
 success: true,
@@ -35,7 +35,7 @@ message: 'ESIHLAHLENI membership backend is running'
 });
 });
 
-// Test Database Connection
+// Test database connection
 async function testConnection() {
 try {
 await sequelize.authenticate();
@@ -46,7 +46,7 @@ throw error;
 }
 }
 
-// Ensure Default Admin Exists
+// Ensure admin user exists
 async function ensureDefaultAdmin() {
 try {
 const email = process.env.ADMIN_EMAIL;
@@ -59,7 +59,9 @@ if (!email || !password) {
 }
 
 const existing = await User.findOne({
-  where: { email: email }
+  where: {
+    email: email
+  }
 });
 
 if (existing) {
@@ -84,15 +86,13 @@ console.error('Error creating admin user:', error);
 }
 }
 
-// Start Server
+// Start server
 async function startServer() {
 try {
 await testConnection();
 
 ```
-// Tables already exist in Railway
-// Do not run sequelize.sync() in production
-
+// Database tables already exist in Railway
 await ensureDefaultAdmin();
 
 const PORT = process.env.PORT || 5000;
