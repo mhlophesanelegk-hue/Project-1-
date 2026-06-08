@@ -52,7 +52,7 @@ try {
 const email = process.env.ADMIN_EMAIL;
 const password = process.env.ADMIN_PASSWORD;
 
-```
+
 if (!email || !password) {
   console.log('ADMIN_EMAIL or ADMIN_PASSWORD missing');
   return;
@@ -77,7 +77,7 @@ await User.create({
 });
 
 console.log('Created default admin user: ' + email);
-```
+
 
 } catch (error) {
 console.error('Error creating admin user:', error);
@@ -89,7 +89,7 @@ async function startServer() {
 try {
 console.log('Starting application...');
 
-```
+
 await testConnection();
 
 const PORT = process.env.PORT || 5000;
@@ -97,7 +97,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log('Server listening on port ' + PORT);
 });
-```
+
 
 } catch (error) {
 console.error('Unable to start application:', error);
