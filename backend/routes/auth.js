@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { User } = require('../models');
+const { Op } = require('sequelize');
 const { authenticate } = require('../middleware/auth');
 const { sendEmail, emailEnabled } = require('../utils/email');
 
@@ -138,35 +139,63 @@ router.post('/forgot-password', async (req, res) => {
 
 router.post('/reset-password', async (req, res) => {
   const { token, password } = req.body;
+
   if (!token || !password) {
-    return res.status(400).json({ message: 'Token and new password are required.' });
+    return res.status(400).json({
+      message: 'Token and new password are required.'
+    });
   }
 
   try {
+    console.log('================================');
+    console.log('RESET PASSWORD REQUEST');
+    console.log('Token:', token);
+    console.log('================================');
+
     const user = await User.findOne({
       where: {
         resetToken: token,
         resetTokenExpiry: {
-          [require('sequelize').Op.gt]: new Date(),
+          [Op.gt]: new Date(),
         },
       },
     });
 
+    console.log(
+      'User found:',
+      user ? user.email : 'NO USER FOUND'
+    );
+
     if (!user) {
-      return res.status(400).json({ message: 'Invalid or expired reset token.' });
+      return res.status(400).json({
+        message: 'Invalid or expired reset token.'
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     user.password = hashedPassword;
     user.resetToken = null;
     user.resetTokenExpiry = null;
+
     await user.save();
 
-    res.json({ message: 'Password reset successfully. You can now login.' });
+    return res.json({
+      success: true,
+      message: 'Password reset successfully. You can now login.'
+    });
+
   } catch (error) {
+
+    console.error('================================');
+    console.error('RESET PASSWORD ERROR');
     console.error(error);
-    res.status(500).json({ message: 'Failed to reset password.' });
+    console.error('================================');
+
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
 });
-
 module.exports = router;
