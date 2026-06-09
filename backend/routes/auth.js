@@ -102,7 +102,7 @@ router.post('/forgot-password', async (req, res) => {
     user.resetTokenExpiry = resetTokenExpiry;
     await user.save();
 
-    const resetUrl = `${process.env.APP_URL || 'http://localhost:5173'}/reset-password/${resetToken}`;
+   const resetUrl = `${process.env.APP_URL || 'https://project-1-seven-liard.vercel.app'}/reset-password/${resetToken}`;
 
     if (!emailEnabled) {
       console.log('Email disabled, preview reset URL:', resetUrl);
