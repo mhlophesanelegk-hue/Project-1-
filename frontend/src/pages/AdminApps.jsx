@@ -9,9 +9,15 @@ const AdminApps = () => {
   const [durations, setDurations] = useState({});
   const [loadingIds, setLoadingIds] = useState({});
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) return setMessage('Admin login required.');
+    if (!token) {
+      setMessage('Admin login required.');
+      return;
+    }
+
     setToken(token);
     load();
   }, []);
@@ -24,23 +30,36 @@ const AdminApps = () => {
 
   const action = async (id, verb) => {
     setLoadingIds(s => ({ ...s, [id]: true }));
+
     try {
       if (verb === 'approve') {
         await api.post(`/admin/applications/${id}/approve`, {
           duration: durations[id] ?? duration,
         });
       }
+
       if (verb === 'decline') {
         await api.post(`/admin/applications/${id}/decline`);
       }
+
       if (verb === 'delete') {
-        const confirmed = window.confirm('Delete this application? This cannot be undone.');
+        const confirmed = window.confirm(
+          'Delete this application? This cannot be undone.'
+        );
+
         if (!confirmed) return;
+
         await api.delete(`/admin/applications/${id}`);
       }
+
       await load();
+
     } catch (err) {
-      setMessage(err.response?.data?.message || err.message || 'Action failed.');
+      setMessage(
+        err.response?.data?.message ||
+        err.message ||
+        'Action failed.'
+      );
     } finally {
       setLoadingIds(s => ({ ...s, [id]: false }));
     }
@@ -55,28 +74,32 @@ const AdminApps = () => {
   return (
     <section className="admin-page">
 
-      {/* ── HEADER ── */}
       <div className="admin-header">
-        <p className="admin-header-tag">Es'hlahleni Social Club</p>
+        <p className="admin-header-tag">
+          Es'hlahleni Social Club
+        </p>
         <h1>Admin Panel</h1>
-        <p>Applications &amp; Memberships</p>
+        <p>Applications & Memberships</p>
       </div>
 
-      {/* ── MESSAGE ── */}
-      {message && <p className="admin-message">{message}</p>}
+      {message && (
+        <p className="admin-message">{message}</p>
+      )}
 
-      {/* ── INFO BANNER ── */}
       <div className="membership-info">
-        <p>Select membership duration per applicant before approving</p>
+        <p>
+          Select membership duration per applicant before approving
+        </p>
       </div>
 
-      {/* ── TABLE ── */}
       <div className="table-card">
+
         {apps.length === 0 ? (
           <div className="admin-empty">
             <p>No applications to review.</p>
           </div>
         ) : (
+
           <table>
             <thead>
               <tr>
@@ -92,25 +115,27 @@ const AdminApps = () => {
               {apps.map((a) => (
                 <tr key={a.id}>
 
-                  {/* USER */}
                   <td>
-                    <span className="user-name">{a.User?.name}</span>
-                    <span className="user-email">{a.User?.email}</span>
+                    <span className="user-name">
+                      {a.User?.name}
+                    </span>
+
+                    <span className="user-email">
+                      {a.User?.email}
+                    </span>
                   </td>
 
-                  {/* STATUS */}
                   <td>
                     <span className={getStatusClass(a.status)}>
                       {a.status}
                     </span>
                   </td>
 
-                  {/* PROOF */}
                   <td>
                     {a.proofFile ? (
                       <a
                         className="proof-link"
-                        href={`http://localhost:5000/uploads/${a.proofFile}`}
+                        href={`${API_URL}/uploads/${a.proofFile}`}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -121,17 +146,18 @@ const AdminApps = () => {
                     )}
                   </td>
 
-                  {/* MEMBERSHIP */}
                   <td>
+
                     <div className="membership-number">
                       {a.membershipNumber || '—'}
                     </div>
 
                     <div className="membership-duration">
                       <label>Duration</label>
+
                       <select
                         value={durations[a.id] ?? duration}
-                        onChange={e =>
+                        onChange={(e) =>
                           setDurations(prev => ({
                             ...prev,
                             [a.id]: Number(e.target.value),
@@ -148,20 +174,25 @@ const AdminApps = () => {
 
                     {a.expiryDate && (
                       <span className="expiry-date">
-                        Expires {new Date(a.expiryDate).toLocaleDateString()}
+                        Expires{' '}
+                        {new Date(a.expiryDate).toLocaleDateString()}
                       </span>
                     )}
+
                   </td>
 
-                  {/* ACTIONS */}
                   <td>
+
                     <div className="actions">
+
                       <button
                         className="lux-action-btn btn-approve"
                         onClick={() => action(a.id, 'approve')}
                         disabled={loadingIds[a.id]}
                       >
-                        {loadingIds[a.id] ? 'Working…' : 'Approve'}
+                        {loadingIds[a.id]
+                          ? 'Working…'
+                          : 'Approve'}
                       </button>
 
                       <button
@@ -169,7 +200,9 @@ const AdminApps = () => {
                         onClick={() => action(a.id, 'decline')}
                         disabled={loadingIds[a.id]}
                       >
-                        {loadingIds[a.id] ? 'Working…' : 'Decline'}
+                        {loadingIds[a.id]
+                          ? 'Working…'
+                          : 'Decline'}
                       </button>
 
                       <button
@@ -177,22 +210,30 @@ const AdminApps = () => {
                         onClick={() => action(a.id, 'delete')}
                         disabled={loadingIds[a.id]}
                       >
-                        {loadingIds[a.id] ? 'Working…' : 'Delete'}
+                        {loadingIds[a.id]
+                          ? 'Working…'
+                          : 'Delete'}
                       </button>
+
                     </div>
+
                   </td>
 
                 </tr>
               ))}
             </tbody>
+
           </table>
+
         )}
+
       </div>
 
-      {/* ── FOOTER ── */}
       <div className="admin-footer">
         <span className="brand">Es'hlahleni</span>
-        <span className="panel-label">Admin · Private · Members Only</span>
+        <span className="panel-label">
+          Admin · Private · Members Only
+        </span>
       </div>
 
     </section>
