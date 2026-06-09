@@ -11,8 +11,13 @@ const router = express.Router();
 // Create uploads directory automatically
 const uploadDir = path.join(__dirname, '..', 'uploads');
 
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+try {
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+    console.log('Uploads folder created');
+  }
+} catch (err) {
+  console.error('Failed to create uploads folder:', err);
 }
 
 const upload = multer({
@@ -39,59 +44,85 @@ const upload = multer({
 });
 
 router.post('/apply', authenticate, upload.single('proof'), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({
-      message: 'Proof of payment file is required.'
-    });
-  }
-
   try {
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'Proof of payment file is required.'
+      });
+    }
+
+    console.log('Authenticated User:', req.user);
+
     const application = await Application.create({
       userId: req.user.id,
       proofFile: req.file.filename,
-      status: 'awaiting_payment_verification',
+      status: 'awaiting_payment_verification'
     });
 
     try {
       await sendEmail({
         to: req.user.email,
         subject: 'Application Received',
-        text: "Hi, we received your membership application. We'll verify payment and update you soon.",
+        text: "Hi, we received your membership application. We'll verify payment and update you soon."
       });
     } catch (mailErr) {
-      console.error('Failed to send application email:', mailErr);
+      console.error('Email sending failed:', mailErr);
     }
 
     return res.status(201).json({
       success: true,
       message: 'Application submitted successfully.',
-      application,
+      application
     });
 
   } catch (error) {
-    console.error('Application submission error:', error);
+
+    console.error('================================');
+    console.error('APPLICATION SUBMISSION ERROR');
+    console.error(error);
+    console.error('MESSAGE:', error.message);
+
+    if (error.parent) {
+      console.error('DATABASE ERROR:', error.parent.sqlMessage);
+    }
+
+    console.error('================================');
 
     return res.status(500).json({
       success: false,
-      message: 'Application submission failed.',
+      message: error.message,
+      databaseError: error.parent?.sqlMessage || null
     });
   }
 });
 
 router.get('/mine', authenticate, async (req, res) => {
   try {
+
     const applications = await Application.findAll({
-      where: { userId: req.user.id },
-      order: [['approvedAt', 'DESC'], ['createdAt', 'DESC']],
+      where: {
+        userId: req.user.id
+      },
+      order: [
+        ['approvedAt', 'DESC'],
+        ['createdAt', 'DESC']
+      ]
     });
 
-    res.json({ applications });
+    return res.json({
+      success: true,
+      applications
+    });
 
   } catch (error) {
-    console.error(error);
 
-    res.status(500).json({
-      message: 'Could not load applications.',
+    console.error('GET APPLICATIONS ERROR:', error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message
     });
   }
 });
